@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "nom": "Menu Tradition",
+    "entrée": "Salade César",
+    "plat": "Poulet rôti avec gratin dauphinois",
+    "dessert": "Tarte aux pommes",
+    "toShow": true
+  },
+  {
+    "id": 2,
+    "nom": "Menu Gourmet",
+    "entrée": "Foie gras avec confiture d'oignons",
+    "plat": "Filet de bœuf avec purée de truffes",
+    "dessert": "Fondant au chocolat",
+    "toShow": false
+  },
+  {
+    "id": 3,
+    "nom": "Menu Végétarien",
+    "entrée": "Velouté de potiron",
+    "plat": "Lasagnes aux légumes",
+    "dessert": "Salade de fruits frais",
+    "toShow": true
+  },
+  {
+    "id": 4,
+    "nom": "Menu Enfant",
+    "entrée": "Carottes râpées",
+    "plat": "Nuggets avec frites",
+    "dessert": "Glace à la vanille",
+    "toShow": false
+  }
+]
