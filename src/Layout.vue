@@ -18,12 +18,16 @@
 <style>
 .layout {
     display: grid; 
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 400px 1fr;
+    grid-template-rows: 25% 75% 10%;
+    min-height: 100vh;
 }
 
 .layout header, 
 .layout footer {
+    /* css pour dire tu commences a la premiere colonne et tu finis à la dernière */
     grid-column: 1 / -1;
 }
+
 
 </style>

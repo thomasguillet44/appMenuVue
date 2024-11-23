@@ -4,34 +4,41 @@ le # dans les templates du layout pour remplacer le v-slot, on recuperer ce qu'o
 via un slot nommé-->
 <template>
 
+  <ModaleAdd :visible="modaleAddIsVisible"
+            @close="closeModale"
+            @addMenu="addMenu"></ModaleAdd>
+
   <Layout>
     <template #header>
       <h1>Haché Menu</h1>
-      <p>User : {{ user }}</p>
+      <p>User : {{ user }}</p> 
+      <div class="btn btn-secondary m-2" @click="showModalAddMenu()">Ajouter un menu</div>
       <hr>
     </template>
 
-    <template #aside>
-      <input type="text" placeholder="Nom du menu" v-model="nomNouveauMenu">
-      <input type="text" placeholder="Entree" v-model="entreeNouveauMenu">
-      <input type="text" placeholder="Plat" v-model="platNouveauMenu">
-      <input type="text" placeholder="Dessert" v-model="dessertNouveauMenu">
-      <button :disabled="nomNouveauMenu.length == 0" @click="addMenu()">Ajouter un menu</button>
-
-      <ul>
-        <li v-for="menu in menus" :key="menu.nom">
+    <template #aside>      
+      <div class="overflow-list">
+        <ul>
+          <li v-for="menu in menus" :key="menu.nom">
             <LineMenu :menu="menu" 
-              @changeDisplay = "changeDisplay(menu.id)"
-              @delete = "deleteMenu(menu.id)"></LineMenu>
-        </li>
-      </ul>
+              @changeDisplay = "changeDisplay(menu)"
+              @delete = "deleteMenu(menu.id)"
+              @modify="modifyMenuOnCentralPanel(menu.id)"
+              @showEntree="changeDisplay(menu.entree)"
+              @showPlat="changeDisplay(menu.plat)"
+              @showDessert="changeDisplay(menu.dessert)"></LineMenu>
+          </li>
+        </ul>
+      </div>     
     </template>
 
-    <template #main></template>
+    <template #main>
+      <div v-if="hasMenuOnCentralPanel">
+        <CentralMenu :menu="menuToDisplayOnCentralPanel"></CentralMenu>
+      </div>
+    </template>
 
     <template #footer> Footer de l'application</template>
-
-
   </Layout>
 
   
@@ -40,55 +47,85 @@ via un slot nommé-->
 <!--Partie JS du single page component-->
 <script setup>
   
-import {ref} from 'vue';
+import {ref, watchEffect} from 'vue';
+
 import LineMenu from './LineMenu.vue';
 import Layout from './Layout.vue';
+import CentralMenu from './CentralMenu.vue';
+import ModaleAdd from './ModaleAdd.vue';
 
   const user = "Thomas-admin";
-
-  const nouveauMenu = ref([]);
-  const nomNouveauMenu = ref('');
-  const entreeNouveauMenu = ref('');
-  const platNouveauMenu = ref('');
-  const dessertNouveauMenu = ref('');
 
   const menus = ref([ {
     id: generateId(),
     toShow: true,
     nom: 'menu1',
-    entree: 'entree1',
-    plat: 'plat1', 
-    dessert: 'dessert1'
+    entree: {nom: "entree1", recette: "recette de l'entree"},
+    plat: {nom: "plat1", recette: "recette du plat"}, 
+    dessert: {nom: "dessert1", recette: "recette du dessert"}
   }]);
 
-  const addMenu = () => {
+  const menuToDisplayOnCentralPanel = ref ([]);
 
-    nouveauMenu.value = {
+  const hasMenuOnCentralPanel = ref(false);
+
+  const modaleAddIsVisible = ref(false);
+
+  watchEffect(() => {
+    hasMenuOnCentralPanel.value = menuToDisplayOnCentralPanel.value.id != null;
+  })
+
+  const showModalAddMenu = () => {
+    modaleAddIsVisible.value = true;
+  }
+
+  //on est obligé de créer un nouveau menu et de le créer a partir des propriétés récupérées, 
+  //car les objets ne correspondent pas exactement
+  //par ailleurs on doit faire cette petite opération avec les json car sinon je n'arrive pas a avoir 
+  //acces au valeur du proxy
+  const addMenu = (nouveauMenuToSend) => {
+
+    const stringObject = JSON.stringify(nouveauMenuToSend);
+    const jsonParsedObject = JSON.parse(stringObject);
+
+    const nom = jsonParsedObject.nouveauMenuToSend.nom;
+    const entree = jsonParsedObject.nouveauMenuToSend.entree;
+    const plat = jsonParsedObject.nouveauMenuToSend.plat;
+    const dessert = jsonParsedObject.nouveauMenuToSend.dessert;
+
+    const menuToAdd = {
       id: generateId(),
-      toShow: false,
-      nom: nomNouveauMenu.value,
-      entree: entreeNouveauMenu.value,
-      plat: platNouveauMenu.value, 
-      dessert: dessertNouveauMenu.value
+      toShow: true,
+      nom: nom,
+      entree: {nom: entree, recette: "recette de l'entree", toShow: false},
+      plat: {nom: plat, recette: "recette du plat", toShow: false}, 
+      dessert: {nom: dessert, recette: "recette du dessert", toShow: false}
     }
 
-    menus.value.push(nouveauMenu.value);
-
-    
-    nomNouveauMenu.value = ''
-    entreeNouveauMenu.value = ''
-    platNouveauMenu.value = '' 
-    dessertNouveauMenu.value = ''
-    nouveauMenu.value = []
+    menus.value.push(menuToAdd);
   }
 
   const deleteMenu = (id) => {
     menus.value= menus.value.filter(m => m.id !== id);
+    if (id == menuToDisplayOnCentralPanel.value.id) {
+      menuToDisplayOnCentralPanel.value = [];
+    }
   }
 
-  const changeDisplay = (id) => {
-    const menuToShow = menus.value.find(m => m.id == id);
-    menuToShow.toShow = !menuToShow.toShow;
+  const changeDisplay = (elem) => {
+    elem.toShow = !elem.toShow;
+  }
+
+  const modifyMenuOnCentralPanel = (id) => {
+    menuToDisplayOnCentralPanel.value = findMenuInMenus(id);
+  }
+
+  const closeModale = () => {
+    modaleAddIsVisible.value = !modaleAddIsVisible;
+  }
+
+  function findMenuInMenus(id) {
+    return menus.value.find(m => m.id == id);
   }
 
   function generateId() {
@@ -96,13 +133,12 @@ import Layout from './Layout.vue';
           .toString(16)
           .substring(1);    
   }
+
 </script>
 
 <!--Partie CSS du single page component-->
 <style>
-h1 {
-  background-color: yellowgreen;
-  color: black;
-}
+
+
 </style>
 
