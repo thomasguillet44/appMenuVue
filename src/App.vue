@@ -10,14 +10,14 @@ via un slot nommé-->
 
   <Layout>
     <template #header>
-      <h1>Haché Menu</h1>
-      <p>User : {{ user }}</p> 
+      <div class="header-container">
+        <img class="logo" src="./logo cuisine.png" alt="">
+        <h1>Haché Menu !</h1>
+      </div>    
       <div class="btn btn-secondary m-2" @click="showModalAddMenu()">Ajouter un menu</div>
-      <hr>
     </template>
 
-    <template #aside>      
-      <div class="overflow-list">
+    <template #aside>
         <ul>
           <li v-for="menu in menus" :key="menu.nom">
             <LineMenu :menu="menu" 
@@ -28,17 +28,16 @@ via un slot nommé-->
               @showPlat="changeDisplay(menu.plat)"
               @showDessert="changeDisplay(menu.dessert)"></LineMenu>
           </li>
-        </ul>
-      </div>     
+        </ul>  
     </template>
 
     <template #main>
-      <div v-if="hasMenuOnCentralPanel">
+      <div class="main-container" v-if="hasMenuOnCentralPanel">
         <CentralMenu :menu="menuToDisplayOnCentralPanel"></CentralMenu>
       </div>
     </template>
 
-    <template #footer> Footer de l'application</template>
+    <template #footer> - Fin - </template>
   </Layout>
 
   
@@ -58,12 +57,69 @@ import ModaleAdd from './ModaleAdd.vue';
 
   const menus = ref([ {
     id: generateId(),
-    toShow: true,
+    toShow: false,
     nom: 'menu1',
     entree: {nom: "entree1", recette: "recette de l'entree"},
     plat: {nom: "plat1", recette: "recette du plat"}, 
     dessert: {nom: "dessert1", recette: "recette du dessert"}
-  }]);
+  }, {
+    id: generateId(),
+    toShow: false,
+    nom: 'menu1',
+    entree: {nom: "entree1", recette: "recette de l'entree"},
+    plat: {nom: "plat1", recette: "recette du plat"}, 
+    dessert: {nom: "dessert1", recette: "recette du dessert"}
+  },{
+    id: generateId(),
+    toShow: false,
+    nom: 'menu1',
+    entree: {nom: "entree1", recette: "recette de l'entree"},
+    plat: {nom: "plat1", recette: "recette du plat"}, 
+    dessert: {nom: "dessert1", recette: "recette du dessert"}
+  },{
+    id: generateId(),
+    toShow: false,
+    nom: 'menu1',
+    entree: {nom: "entree1", recette: "recette de l'entree"},
+    plat: {nom: "plat1", recette: "recette du plat"}, 
+    dessert: {nom: "dessert1", recette: "recette du dessert"}
+  },{
+    id: generateId(),
+    toShow: false,
+    nom: 'menu1',
+    entree: {nom: "entree1", recette: "recette de l'entree"},
+    plat: {nom: "plat1", recette: "recette du plat"}, 
+    dessert: {nom: "dessert1", recette: "recette du dessert"}
+  },{
+    id: generateId(),
+    toShow: false,
+    nom: 'menu1',
+    entree: {nom: "entree1", recette: "recette de l'entree"},
+    plat: {nom: "plat1", recette: "recette du plat"}, 
+    dessert: {nom: "dessert1", recette: "recette du dessert"}
+  },{
+    id: generateId(),
+    toShow: false,
+    nom: 'menu1',
+    entree: {nom: "entree1", recette: "recette de l'entree"},
+    plat: {nom: "plat1", recette: "recette du plat"}, 
+    dessert: {nom: "dessert1", recette: "recette du dessert"}
+  },{
+    id: generateId(),
+    toShow: false,
+    nom: 'menu1',
+    entree: {nom: "entree1", recette: "recette de l'entree"},
+    plat: {nom: "plat1", recette: "recette du plat"}, 
+    dessert: {nom: "dessert1", recette: "recette du dessert"}
+  },{
+    id: generateId(),
+    toShow: false,
+    nom: 'menu1',
+    entree: {nom: "entree1", recette: "recette de l'entree"},
+    plat: {nom: "plat1", recette: "recette du plat"}, 
+    dessert: {nom: "dessert1", recette: "recette du dessert"}
+  }
+]);
 
   const menuToDisplayOnCentralPanel = ref ([]);
 
@@ -137,8 +193,37 @@ import ModaleAdd from './ModaleAdd.vue';
 </script>
 
 <!--Partie CSS du single page component-->
-<style>
+<style scoped>
+.main-container {
+    min-height: 100vh;
+}
 
+.logo {
+  height: 70px;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+}
+
+h1 {
+  padding-left: 10px;
+  font-family: "Kalnia Glaze", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+/* Pour le responsive, changer le positionnement a partir d'une certaine hauteur */
+@media screen and (max-height: 446px) {
+    .main-container {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
 
 </style>
 

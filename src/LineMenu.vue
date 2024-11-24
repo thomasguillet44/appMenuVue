@@ -64,11 +64,14 @@
 .left-menu {
     display:grid;
     grid-template-columns: 90% 1fr;
-    border: solid rgb(140, 93, 136);
+    border: solid rgb(253, 253, 253);
     border-radius: 5px;
     padding-left: 1rem;
     cursor: pointer;
     margin: 1px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    
 }
 
 .left-menu:hover {
