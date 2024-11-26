@@ -11,7 +11,7 @@ via un slot nommé-->
   <Layout>
     <template #header>
       <div class="header-container">
-        <img class="logo" src="./logo cuisine.png" alt="">
+        <img class="logo" src="./img/logo cuisine.png" alt="">
         <h1>Haché Menu</h1>
       </div>    
       <div class="btn btn-secondary" @click="showModalAddMenu()">Ajouter un menu</div>
@@ -50,10 +50,10 @@ via un slot nommé-->
   
 import {ref, watchEffect} from 'vue';
 
-import LineMenu from './LineMenu.vue';
-import Layout from './Layout.vue';
-import CentralMenu from './CentralMenu.vue';
-import ModaleAdd from './ModaleAdd.vue';
+import LineMenu from './components/LineMenu.vue';
+import Layout from './components/Layout.vue';
+import CentralMenu from './components/CentralMenu.vue';
+import ModaleAdd from './components/ModaleAdd.vue';
 
   const user = "Thomas-admin";
 
