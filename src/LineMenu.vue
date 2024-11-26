@@ -7,13 +7,25 @@
         </div>       
     </div>    
     <div class="menu-detail-container" v-show="menu.toShow">
-        <p class="menu-elem" @click="emitsShowEntree">{{ menu.entree.nom }}</p>
+        <div class="menu-elem" @click="emitsShowEntree">
+            <i v-show="!menu.entree.toShow" class="bi bi-caret-right"></i> 
+            <i v-show="menu.entree.toShow" class="bi bi-caret-down"></i>
+            <span>{{ menu.entree.nom }}</span>           
+        </div>  
         <p class="recette-left" v-show="menu.entree.toShow">{{ menu.entree.recette }}</p>
 
-        <p class="menu-elem" @click="emitsShowPlat">{{ menu.plat.nom }}</p>
+        <div class="menu-elem" @click="emitsShowPlat">
+            <i v-show="!menu.plat.toShow" class="bi bi-caret-right"></i> 
+            <i v-show="menu.plat.toShow" class="bi bi-caret-down"></i>
+            <span>{{ menu.plat.nom }}</span>            
+        </div>
         <p class="recette-left" v-show="menu.plat.toShow">{{ menu.plat.recette }}</p>
-
-        <p class="menu-elem" @click="emitsShowDessert">{{ menu.dessert.nom }}</p>
+       
+        <div  class="menu-elem" @click="emitsShowDessert">
+            <i v-show="!menu.dessert.toShow" class="bi bi-caret-right"></i> 
+            <i v-show="menu.dessert.toShow" class="bi bi-caret-down"></i>
+            <span>{{ menu.dessert.nom }}</span>
+        </div>
         <p class="recette-left" v-show="menu.dessert.toShow">{{ menu.dessert.recette }}</p>
     </div>
 </template>
@@ -64,18 +76,16 @@
 .left-menu {
     display:grid;
     grid-template-columns: 90% 1fr;
-    border: solid rgb(253, 253, 253);
     border-radius: 5px;
     padding-left: 1rem;
     cursor: pointer;
-    margin: 1px;
-    margin-bottom: 5px;
     padding-bottom: 5px;
-    
+    border: solid black;   
 }
 
 .left-menu:hover {
-    background: rgb(140, 93, 136);
+    background: gray;
+    border: solid gray;
     color:white;
 }
 
@@ -84,25 +94,25 @@ ul {
     padding-left: 5px !important;
 }
 
-.menu-detail-container {
-    padding-left: 30px;
-}
-
 .menu-elem {
-    border: solid rgb(248, 185, 219);
     margin-bottom: 0 !important;
-    cursor: pointer;   
-    border-radius: 5px;
+    cursor: pointer;
 }
 
 .menu-elem:hover {
-    background: rgb(248, 185, 219);
+    background: rgb(70, 187, 74);
     color: white;
 }
 
+.menu-detail-container {
+    margin-left: 3px;
+}
+
 .recette-left  {
-    background-color: rgb(255, 222, 252);
-    padding-left: 5px;
+    border: solid rgb(36, 202, 30);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding-left: 3px;
     margin-bottom: 0 !important;
 }
 

@@ -97,10 +97,10 @@
 }
 
 h2 {
-    text-transform: capitalize;
-    font-family: "Sevillana", cursive;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
     font-style: normal;
-    font-size: 5rem;
+    text-transform: capitalize;
 }
 
 p {

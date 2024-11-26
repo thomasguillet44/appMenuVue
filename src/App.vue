@@ -12,10 +12,12 @@ via un slot nommé-->
     <template #header>
       <div class="header-container">
         <img class="logo" src="./logo cuisine.png" alt="">
-        <h1>Haché Menu !</h1>
+        <h1>Haché Menu</h1>
       </div>    
-      <div class="btn btn-secondary m-2" @click="showModalAddMenu()">Ajouter un menu</div>
+      <div class="btn btn-secondary" @click="showModalAddMenu()">Ajouter un menu</div>
     </template>
+
+    <hr>
 
     <template #aside>
         <ul>
@@ -209,11 +211,11 @@ import ModaleAdd from './ModaleAdd.vue';
 
 h1 {
   padding-left: 10px;
-  font-family: "Kalnia Glaze", serif;
+  text-transform: uppercase;
+  font-family: "Playfair Display", serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  font-variation-settings: "wdth" 100;
 }
 
 /* Pour le responsive, changer le positionnement a partir d'une certaine hauteur */

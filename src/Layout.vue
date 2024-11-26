@@ -21,7 +21,7 @@
     grid-template-columns: 400px 1fr;
     grid-template-rows: 20% 75% 5%;
     min-height: 100vh;   
-    background: linear-gradient(rgb(255, 255, 255), rgb(72, 0, 72));
+    background: white;
 }
 
 .layout header, 
@@ -43,6 +43,8 @@ aside {
     max-height: 100vh;
     padding-top: 10px;
     padding-bottom: 1Opx;
+    padding-right: 10px;
+    border-right: solid black;
 }
 
 main {
